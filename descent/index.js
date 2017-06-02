@@ -1,4 +1,5 @@
 const test = require('tape');
+const Random = require('random-js');
 
 /*
 Game Input
@@ -22,6 +23,14 @@ Constraints
 Response time per turn ≤ 100ms
 */
 
+function readline() {
+  const max = 9;
+  const random = new Random();
+  return random.integer(0, 9);
+
+  // Use random-js
+}
+
 // Solve using iterator
 // https://github.com/getify/You-Dont-Know-JS/blob/master/es6%20%26%20beyond/ch3.md
 const Scanner = {
@@ -38,7 +47,7 @@ const Scanner = {
         if(count <= stop) {
           count++;
           return {
-            value: count,
+            value: readline(),
             done: false
           }
         }
@@ -51,6 +60,5 @@ const Scanner = {
   }
 };
 
-[...Scanner].reduce((accum, curr) => {
-  console.log(curr);
-}, []);
+const threat = [...Scanner].reduce((accum, curr) => curr > accum ? curr : accum, -1);
+console.log(threat);
