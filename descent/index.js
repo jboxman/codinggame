@@ -26,7 +26,7 @@ Response time per turn ≤ 100ms
 function readline() {
   const max = 9;
   const random = new Random();
-  return random.integer(0, 9);
+  return ''+random.integer(0, 9);
 
   // Use random-js
 }
@@ -36,7 +36,7 @@ function readline() {
 const Scanner = {
   [Symbol.iterator]() {
     const stop = 7;
-    let count = 0;
+    let count = -1;
 
     return {
       [Symbol.iterator]() {
@@ -44,10 +44,13 @@ const Scanner = {
       },
 
       next() {
-        if(count <= stop) {
+        if(count < stop) {
           count++;
           return {
-            value: readline(),
+            value: {
+              height: parseInt(readline()),
+              idx: count
+            },
             done: false
           }
         }
@@ -60,5 +63,5 @@ const Scanner = {
   }
 };
 
-const threat = [...Scanner].reduce((accum, curr) => curr > accum ? curr : accum, -1);
+var threat = [...Scanner].reduce((accum, curr) => curr.height > accum.height ? curr : accum, {height: -1, idx: -1});
 console.log(threat);
